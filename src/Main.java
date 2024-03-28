@@ -33,24 +33,22 @@ public class Main {
                 if(i==0&&j==0){
                     char charPalabra=palabra.charAt(j);
                     lista_juego[i][j]=charPalabra;
-                    System.out.print(ANSI_GREEN_BACKGROUND + ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");
+                    System.out.print(ANSI_GREEN_BACKGROUND +"\u001B[1m"+ ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");
                 }else {
-                    System.out.print(ANSI_WHITE_BACKGROUND + ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");
+                    System.out.print(ANSI_WHITE_BACKGROUND +"\u001B[1m"+ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");
                 }
             }
             System.out.println("\n");
         }
     }
-
     static void creartablero(char lista_juego[][],int lista_codigo[][], String palabra) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                System.out.print("\u001B["+lista_codigo[i][j]+"m"+ ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");///Modificar para imprimir la matriz ya formateada
+                System.out.print("\u001B[1m\u001B["+lista_codigo[i][j]+"m"+ ANSI_BLACK + " " + lista_juego[i][j] + " " + ANSI_RESET + "  ");///Modificar para imprimir la matriz ya formateada
             }
             System.out.println("\n");
         }
     }
-
     static int[][] verificarPalabra(char palabraArray[],char palabra_inputArray[],int lista_codigo[][],int intento){
 
         char[] lista_letras_verdes;
@@ -74,10 +72,8 @@ public class Main {
                 lista_codigo[intento][i]=47;
            }
         }
-
        return lista_codigo;
     }
-
     static boolean comprobarFin(char palabraArray[], char palabra_inputArray[]){
         for(int i=0; i< palabraArray.length;i++){
             if(palabraArray[i]!=palabra_inputArray[i]){
@@ -86,7 +82,6 @@ public class Main {
         }
         return true;
     }
-
     public static void main(String[] args) {
         System.out.println("=======MAGIC WORD=======\n==>Descubre la palabra: \n");
         Scanner teclado = new Scanner(System.in);
@@ -97,9 +92,9 @@ public class Main {
 
         int lista_codigo[][] =new int[][]{{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47}};
 
-        String palabra="animo";
-        palabra=palabra.toUpperCase();
+        String palabra="mundo";
 
+        palabra=palabra.toUpperCase();
         char palabraArray[]=palabra.toCharArray();
 
         String palabra_input;
@@ -124,6 +119,7 @@ public class Main {
             lista_codigo=verificarPalabra(palabraArray,palabra_inputArray,lista_codigo,intento);
 
             boolean finJuego=comprobarFin(palabraArray,palabra_inputArray);
+
             if(finJuego==true){
                 System.out.println("=====PALABRA DESCUBIERTA=====\n=====FIN DE LA PARTIDA=====");
                 break;
