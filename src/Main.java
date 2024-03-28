@@ -82,6 +82,22 @@ public class Main {
         }
         return true;
     }
+
+
+    static void animate(char lista_juego[][], String palabra){
+        // Método para animar mostrando la palabra correcta con fondos alternos
+        System.out.println("Adivinaste la palabra...");
+        System.out.println("Mostrando la palabra: ");
+        for (int i = 0; i < palabra.length(); i++) {
+            if (i % 2 == 0) {
+                System.out.print(ANSI_GREEN_BACKGROUND + "\u001B[1m"+ANSI_BLACK+ palabra.charAt(i) + ANSI_RESET);
+            } else {
+                System.out.print(ANSI_WHITE_BACKGROUND + "\u001B[1m"+ANSI_BLACK+ palabra.charAt(i) + ANSI_RESET);
+            }
+        }
+        System.out.println();
+        System.out.println("¡Felicidades!");
+    }
     public static void main(String[] args) {
         System.out.println("=======MAGIC WORD=======\n==>Descubre la palabra: \n");
         Scanner teclado = new Scanner(System.in);
@@ -120,10 +136,12 @@ public class Main {
 
             boolean finJuego=comprobarFin(palabraArray,palabra_inputArray);
 
-            if(finJuego==true){
-                System.out.println("=====PALABRA DESCUBIERTA=====\n=====FIN DE LA PARTIDA=====");
+            if (finJuego) {
+                animate(lista_juego, palabra);
+
                 break;
             }
+
             intento++;
             creartablero(lista_juego,lista_codigo,palabra);
         }
