@@ -51,29 +51,72 @@ public class Main {
     }
     static int[][] verificarPalabra(char palabraArray[],char palabra_inputArray[],int lista_codigo[][],int intento){
 
+        String cadena_palabraArray=new String(palabraArray);
+        String cadena_palabra_inputArray=new String(palabra_inputArray);
         char[] lista_letras_verdes;
+
         lista_letras_verdes = new char[]{' ', ' ', ' ', ' ', ' ', ' '};
-        for(int i=0; i< palabraArray.length;i++){
-            if(palabraArray[i]==palabra_inputArray[i]){
-                lista_codigo[intento][i]=42;
-                lista_letras_verdes[i]=palabraArray[i];
-            }
-       }
-       String cadena_letras_verdes=new String(lista_letras_verdes);
-       //System.out.println("control "+cadena_letras_verdes);
-       String cadena_palabraArray=new String(palabraArray);
-       for(int i=0;i<palabraArray.length;i++){
-//           if(palabraArray[i]==palabra_inputArray[i]) {
-//               lista_codigo[intento][i] = 42;
-//               lista_letras_verdes[i] = palabraArray[i];
-           if(palabraArray[i]!=palabra_inputArray[i]&&cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])==-1){
-                lista_codigo[intento][i]=43;
-           }else if(palabraArray[i]!=palabra_inputArray[i]&&cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1){
-                lista_codigo[intento][i]=47;
-           }
+
+        int posicion=0;
+
+        for(int y=0; y< palabraArray.length;y++){
+            if(palabraArray[y]==palabra_inputArray[y]){
+                lista_letras_verdes[y]=palabraArray[y];
+            }}
+
+        String cadena_letras_verdes=new String(lista_letras_verdes);
+
+        for(int i=0; i<5; i++){
+        int contador_palabra=0;
+            for(int j = 0;j<cadena_palabraArray.length();j++){
+                if(palabra_inputArray[i] == cadena_palabraArray.charAt(j)){
+                    contador_palabra++;
+                }
         }
+        int contador_palabraInput=0;
+        for(int x=0;x<posicion;x++){
+            if(palabra_inputArray[i] == cadena_palabra_inputArray.charAt(x)){
+                contador_palabraInput++;
+            }}
+
+        int contador_letra_verde=0;
+        for(int letra=0;letra<cadena_letras_verdes.length();letra++){
+            if(palabra_inputArray[i] == cadena_letras_verdes.charAt(letra)){
+                contador_letra_verde++;
+            }
+        }
+
+        int contador_letra_amarilla=0;
+            for(int x=0;x<i;x++){
+                if(palabra_inputArray[i]==palabraArray[i]){
+                    continue;
+                }else{
+                    if(palabra_inputArray[i] == cadena_palabra_inputArray.charAt(x)){
+                    contador_letra_amarilla++;
+                }}
+            }
+
+        if(palabraArray[i]==palabra_inputArray[i]){
+                lista_codigo[intento][i]=42;}
+        else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])==-1){
+            if(contador_palabraInput<contador_palabra){
+            lista_codigo[intento][i]=43;}
+        } else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1){
+            if(contador_letra_amarilla+contador_letra_verde<=contador_palabra){
+            lista_codigo[intento][i]=43;
+            }
+        }
+//        else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1&&contador_letra_verde<contador_palabra){
+//            lista_codigo[intento][i]=43;}
+//        else if(cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1&&contador_palabra<contador_letra_verde) {
+//                lista_codigo[intento][i] = 43;
+//            }
+        posicion++;
+        }
+
        return lista_codigo;
     }
+
     static boolean comprobarFin(char palabraArray[], char palabra_inputArray[]){
         for(int i=0; i< palabraArray.length;i++){
             if(palabraArray[i]!=palabra_inputArray[i]){
@@ -86,8 +129,8 @@ public class Main {
 
     static void animate(char lista_juego[][], String palabra){
         // Método para animar mostrando la palabra correcta con fondos alternos
-        System.out.println("Adivinaste la palabra...");
-        System.out.println("Mostrando la palabra: ");
+        System.out.println("ADIVINASTE LA PALABRA\n");
+        System.out.println("Mostrando la palabra: \n");
         for (int i = 0; i < palabra.length(); i++) {
             if (i % 2 == 0) {
                 System.out.print(ANSI_GREEN_BACKGROUND + "\u001B[1m"+ANSI_BLACK+ palabra.charAt(i) + ANSI_RESET);
@@ -96,8 +139,24 @@ public class Main {
             }
         }
         System.out.println();
-        System.out.println("¡Felicidades!");
+        System.out.println("\n¡FELICIDADES!");
     }
+
+    static void animate_fin(char lista_juego[][], String palabra){
+        // Método para animar mostrando la palabra correcta con fondos alternos
+        System.out.println("¡¡¡HAS PERDIDO!!!:\n");
+        System.out.println("La palabra es: \n");
+        for (int i = 0; i < palabra.length(); i++) {
+            if (i % 2 == 0) {
+                System.out.print(ANSI_RED_BACKGROUND + "\u001B[1m"+ANSI_BLACK+ palabra.charAt(i) + ANSI_RESET);
+            } else {
+                System.out.print(ANSI_YELLOW_BACKGROUND + "\u001B[1m"+ANSI_BLACK+ palabra.charAt(i) + ANSI_RESET);
+            }
+        }
+        System.out.println();
+        System.out.println("\n¡SIGUE INTENTANDOLO!");
+    }
+
     public static void main(String[] args) {
         System.out.println("=======MAGIC WORD=======\n==>Descubre la palabra: \n");
         Scanner teclado = new Scanner(System.in);
@@ -108,7 +167,7 @@ public class Main {
 
         int lista_codigo[][] =new int[][]{{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47}};
 
-        String palabra="mundo";
+        String palabra="anima";
 
         palabra=palabra.toUpperCase();
         char palabraArray[]=palabra.toCharArray();
@@ -136,6 +195,7 @@ public class Main {
 
             boolean finJuego=comprobarFin(palabraArray,palabra_inputArray);
 
+            creartablero(lista_juego,lista_codigo,palabra);
             if (finJuego) {
                 animate(lista_juego, palabra);
 
@@ -143,7 +203,11 @@ public class Main {
             }
 
             intento++;
-            creartablero(lista_juego,lista_codigo,palabra);
+            //creartablero(lista_juego,lista_codigo,palabra);
         }
+        if(intento>=5){
+            animate_fin(lista_juego,palabra);
+        }
+
     }
 }
