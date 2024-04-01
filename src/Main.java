@@ -27,7 +27,7 @@ public class Main {
         String palabra = lista[indice];
         return palabra;
     }
-    static void iniciarTablero(char lista_juego[][],String palabra){
+    static void iniciarTablero(char[][] lista_juego, String palabra){
         for(int i=0; i<5;i++){
             for(int j=0;j<5; j++){
                 if(i==0&&j==0){
@@ -49,7 +49,7 @@ public class Main {
             System.out.println("\n");
         }
     }
-    static int[][] verificarPalabra(char palabraArray[],char palabra_inputArray[],int lista_codigo[][],int intento){
+    static int[][] verificarPalabra(char[] palabraArray, char[] palabra_inputArray, int[][] lista_codigo, int intento){
 
         String cadena_palabraArray=new String(palabraArray);
         String cadena_palabra_inputArray=new String(palabra_inputArray);
@@ -57,7 +57,7 @@ public class Main {
 
         lista_letras_verdes = new char[]{' ', ' ', ' ', ' ', ' ', ' '};
 
-        int posicion=0;
+        int posicion=1;
 
         for(int y=0; y< palabraArray.length;y++){
             if(palabraArray[y]==palabra_inputArray[y]){
@@ -87,30 +87,22 @@ public class Main {
         }
 
         int contador_letra_amarilla=0;
-            for(int x=0;x<i;x++){
-                if(palabra_inputArray[i]==palabraArray[i]){
-                    continue;
-                }else{
-                    if(palabra_inputArray[i] == cadena_palabra_inputArray.charAt(x)){
-                    contador_letra_amarilla++;
-                }}
+        for(int letra=0;letra<i+1;letra++){
+            if(palabra_inputArray[i] != cadena_letras_verdes.charAt(letra)&&palabra_inputArray[i]==cadena_palabra_inputArray.charAt(letra)){
+                contador_letra_amarilla++;
             }
+        }
 
         if(palabraArray[i]==palabra_inputArray[i]){
                 lista_codigo[intento][i]=42;}
         else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])==-1){
-            if(contador_palabraInput<contador_palabra){
+            if(contador_palabraInput<=contador_palabra){
             lista_codigo[intento][i]=43;}
         } else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1){
-            if(contador_letra_amarilla+contador_letra_verde<=contador_palabra){
+            if(contador_palabra>=contador_letra_amarilla+contador_letra_verde){
             lista_codigo[intento][i]=43;
             }
         }
-//        else if (cadena_palabraArray.indexOf(palabra_inputArray[i])!=-1&&cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1&&contador_letra_verde<contador_palabra){
-//            lista_codigo[intento][i]=43;}
-//        else if(cadena_letras_verdes.indexOf(palabra_inputArray[i])!=-1&&contador_palabra<contador_letra_verde) {
-//                lista_codigo[intento][i] = 43;
-//            }
         posicion++;
         }
 
@@ -127,7 +119,7 @@ public class Main {
     }
 
 
-    static void animate(char lista_juego[][], String palabra){
+    static void animate(String palabra){
         // Método para animar mostrando la palabra correcta con fondos alternos
         System.out.println("ADIVINASTE LA PALABRA\n");
         System.out.println("Mostrando la palabra: \n");
@@ -142,7 +134,7 @@ public class Main {
         System.out.println("\n¡FELICIDADES!");
     }
 
-    static void animate_fin(char lista_juego[][], String palabra){
+    static void animate_fin(String palabra){
         // Método para animar mostrando la palabra correcta con fondos alternos
         System.out.println("¡¡¡HAS PERDIDO!!!:\n");
         System.out.println("La palabra es: \n");
@@ -163,17 +155,17 @@ public class Main {
         String [] listaPalabras = {"avion","arbol","alado","agudo","apnea"};
         String [] listaJuego = {"\u001B[30m","\u001B[31m","\u001B[36m"};
 
-        char lista_juego[][]=new char[][]{{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '}};
+        char[][] lista_juego =new char[][]{{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '},{' ',' ',' ',' ',' '}};
 
-        int lista_codigo[][] =new int[][]{{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47}};
+        int[][] lista_codigo =new int[][]{{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47},{47,47,47,47,47}};
 
         String palabra="anima";
 
         palabra=palabra.toUpperCase();
-        char palabraArray[]=palabra.toCharArray();
+        char[] palabraArray =palabra.toCharArray();
 
         String palabra_input;
-        char palabra_inputArray[];
+        char[] palabra_inputArray;
 
         int intento=0;
 
@@ -197,7 +189,7 @@ public class Main {
 
             creartablero(lista_juego,lista_codigo,palabra);
             if (finJuego) {
-                animate(lista_juego, palabra);
+                animate(palabra);
 
                 break;
             }
@@ -206,7 +198,7 @@ public class Main {
             //creartablero(lista_juego,lista_codigo,palabra);
         }
         if(intento>=5){
-            animate_fin(lista_juego,palabra);
+            animate_fin(palabra);
         }
 
     }
